@@ -12,7 +12,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d195244b-d054-485d-9b37-6a3df1342c41</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.ts</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <StartWebBrowser>True</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -34,10 +35,94 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="server.ts" />
-    <Content Include="tsconfig.json" />
+    <Folder Include="e2e\" />
+    <Folder Include="src\" />
+    <Folder Include="src\app\" />
+    <Folder Include="src\app\admin\" />
+    <Folder Include="src\app\admin\home\" />
+    <Folder Include="src\app\admin\photos\" />
+    <Folder Include="src\app\admin\posts\" />
+    <Folder Include="src\app\directives\" />
+    <Folder Include="src\app\header\" />
+    <Folder Include="src\app\home\" />
+    <Folder Include="src\app\login\" />
+    <Folder Include="src\app\login\login-form\" />
+    <Folder Include="src\app\shared\" />
+    <Folder Include="src\app\shared\models\" />
+    <Folder Include="src\app\shared\modules\" />
+    <Folder Include="src\app\shared\services\" />
+    <Folder Include="src\app\shared\utils\" />
+    <Folder Include="src\assets\" />
+    <Folder Include="src\environments\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\app.po.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.module.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.routing.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.service.ts" />
+    <TypeScriptCompile Include="src\app\admin\home\home.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\photos\photos.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\posts\posts.component.ts" />
+    <TypeScriptCompile Include="src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\app.component.ts" />
+    <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\app.routing.ts" />
+    <TypeScriptCompile Include="src\app\auth.guard.ts" />
+    <TypeScriptCompile Include="src\app\authenticate-xhr.backend.ts" />
+    <TypeScriptCompile Include="src\app\directives\focus.directive.ts" />
+    <TypeScriptCompile Include="src\app\header\header.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\header\header.component.ts" />
+    <TypeScriptCompile Include="src\app\home\home.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="src\app\login\login-form\login-form.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\login\login-form\login-form.component.ts" />
+    <TypeScriptCompile Include="src\app\login\login.module.ts" />
+    <TypeScriptCompile Include="src\app\material.module.ts" />
+    <TypeScriptCompile Include="src\app\shared\models\credentials.interface.ts" />
+    <TypeScriptCompile Include="src\app\shared\models\user.registration.interface.ts" />
+    <TypeScriptCompile Include="src\app\shared\modules\shared.module.ts" />
+    <TypeScriptCompile Include="src\app\shared\services\base.service.ts" />
+    <TypeScriptCompile Include="src\app\shared\services\user.service.ts" />
+    <TypeScriptCompile Include="src\app\shared\utils\config.service.ts" />
+    <TypeScriptCompile Include="src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="src\environments\environment.ts" />
+    <TypeScriptCompile Include="src\main.ts" />
+    <TypeScriptCompile Include="src\polyfills.ts" />
+    <TypeScriptCompile Include="src\test.ts" />
+    <TypeScriptCompile Include="src\typings.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".angular-cli.json" />
+    <Content Include="e2e\tsconfig.e2e.json" />
     <Content Include="package.json" />
-    <Content Include="README.md" />
+    <Content Include="src\app\admin\home\home.component.html" />
+    <Content Include="src\app\admin\home\home.component.scss" />
+    <Content Include="src\app\admin\photos\photos.component.html" />
+    <Content Include="src\app\admin\photos\photos.component.scss" />
+    <Content Include="src\app\admin\posts\posts.component.html" />
+    <Content Include="src\app\admin\posts\posts.component.scss" />
+    <Content Include="src\app\app.component.html" />
+    <Content Include="src\app\app.component.scss" />
+    <Content Include="src\app\header\header.component.html" />
+    <Content Include="src\app\header\header.component.scss" />
+    <Content Include="src\app\home\home.component.html" />
+    <Content Include="src\app\home\home.component.scss" />
+    <Content Include="src\app\login\login-form\login-form.component.html" />
+    <Content Include="src\app\login\login-form\login-form.component.scss" />
+    <Content Include="src\assets\.gitkeep" />
+    <Content Include="src\favicon.ico" />
+    <Content Include="src\index.html" />
+    <Content Include="src\styles.scss" />
+    <Content Include="src\tsconfig.app.json" />
+    <Content Include="src\tsconfig.spec.json" />
+    <Content Include="tsconfig.json" />
+    <Content Include="tslint.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="karma.conf.js" />
+    <Compile Include="protractor.conf.js" />
+    <Compile Include="src\app\rxjs-operators.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
