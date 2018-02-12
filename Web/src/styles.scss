@@ -10,13 +10,13 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
 $adam-app-primary: mat-palette($mat-deep-purple);
-$adam-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$adam-app-accent:  mat-palette($mat-grey, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $adam-app-warn:    mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$adam-app-theme:   mat-light-theme($adam-app-primary, $adam-app-accent, $adam-app-warn);
+$adam-app-theme:   mat-dark-theme($adam-app-primary, $adam-app-accent, $adam-app-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -24,7 +24,8 @@ $adam-app-theme:   mat-light-theme($adam-app-primary, $adam-app-accent, $adam-ap
 @include angular-material-theme($adam-app-theme);
 
 body, html {
-    //background-color: #1e1e1e;
+    height: 100%;
+    width: 100%;
     margin: 0;
 }
 

@@ -1,7 +1,12 @@
-<app-header></app-header>
+<mat-drawer-container>
+	<mat-drawer mode="side" [opened]="opened">
+		<sidenav></sidenav>
+	</mat-drawer>
 
-<div class="container-fluid"> 
-	<router-outlet></router-outlet>
-</div>
+	<mat-drawer-content>
+		<app-toolbar></app-toolbar>
+		<router-outlet></router-outlet>
+	</mat-drawer-content>
+</mat-drawer-container>
  
 

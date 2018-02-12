@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/modules/shared.module';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../material.module';
+
 import { routing } from './admin.routing';
-import { HomeComponent } from './home/home.component';
 import { PhotosComponent } from './photos/photos.component';
 import { PostsComponent } from './posts/posts.component';
+import { RootComponent } from './root/root.component';
+
 import { AdminService } from './admin.service';
 
 import { AuthGuard } from '../auth.guard';
@@ -15,13 +19,15 @@ import { AuthGuard } from '../auth.guard';
   imports: [
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
+    MaterialModule,
     routing,
     SharedModule
   ],
   declarations: [
-    HomeComponent,
     PhotosComponent,
-    PostsComponent
+    PostsComponent,
+    RootComponent
   ],
   exports: [],
   providers: [

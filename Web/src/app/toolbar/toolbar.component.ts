@@ -3,24 +3,28 @@ import { Subscription } from "rxjs/Subscription";
 import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
-export class AppComponent implements OnDestroy {
-  opened: boolean = true;
+export class ToolbarComponent {
+  showIcon: boolean = false;
   watcher: Subscription;
 
   constructor(media: ObservableMedia) {
     this.watcher = media.subscribe((change: MediaChange) => {
       let activeMediaQuery = change.mqAlias;
       if (change.mqAlias == 'xs') {
-        this.opened = false;
+        this.showIcon = true;
       }
       else {
-        this.opened = true;
+        this.showIcon = false;
       }
     });
+  }
+
+  toggleSidenav() {
+    
   }
 
   ngOnDestroy() {

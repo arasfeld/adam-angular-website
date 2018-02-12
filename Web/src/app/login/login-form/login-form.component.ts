@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Credentials } from '../../shared/models/credentials.interface';
 import { UserService } from '../../shared/services/user.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   isRequesting: boolean;
   submitted: boolean = false;
-  credentials: Credentials = { email: '', password: '' };
 
   constructor(private userService: UserService, private router: Router, private fb: FormBuilder) { }
 
