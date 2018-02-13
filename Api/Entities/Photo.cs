@@ -2,15 +2,15 @@
 
 namespace Api.Entities
 {
-    public class Post
+    public class Photo
     {
-        public int PostId { get; set; }
+        public int PhotoId { get; set; }
 
-        public int? ImageId { get; set; }
+        public int ImageId { get; set; }
 
         public string Title { get; set; }
 
-        public string Body { get; set; }
+        public string Caption { get; set; }
 
         public DateTime Timestamp { get; set; }
 

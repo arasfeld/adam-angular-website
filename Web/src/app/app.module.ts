@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -40,6 +41,7 @@ import { LoginModule }  from './login/login.module';
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     FlexLayoutModule,
     MaterialModule,
     /* App Modules */

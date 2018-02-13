@@ -4,15 +4,34 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class LayoutService {
-  // Observable navItem source
-  private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-  // Observable navItem stream
-  authNavStatus$ = this._authNavStatusSource.asObservable();
+  // Observable sidenav source
+  private _sidenavStatusSource = new BehaviorSubject<boolean>(false);
+  // Observable sidenav stream
+  sidenavStatus$ = this._sidenavStatusSource.asObservable();
 
-  private loggedIn = false;
+  private sidenavOpen = false;
 
   constructor() {
-    this._authNavStatusSource.next(this.loggedIn);
+    this._sidenavStatusSource.next(this.sidenavOpen);
+  }
+
+  openSidenav() {
+    this.sidenavOpen = true;
+    this._sidenavStatusSource.next(this.sidenavOpen);
+  }
+
+  closeSidenav() {
+    this.sidenavOpen = false;
+    this._sidenavStatusSource.next(this.sidenavOpen);
+  }
+
+  toggleSidenav() {
+    this.sidenavOpen = !this.sidenavOpen;
+    this._sidenavStatusSource.next(this.sidenavOpen);
+  }
+
+  isSidenavOpen() {
+    return this.sidenavOpen;
   }
 }
 

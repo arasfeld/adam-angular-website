@@ -11,8 +11,8 @@ using System;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180209135605_Initial")]
-    partial class Initial
+    [Migration("20180213131220_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,43 @@ namespace Api.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Api.Entities.Image", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Extension");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.HasKey("ImageId");
+
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("Api.Entities.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Caption");
+
+                    b.Property<int>("ImageId");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("PhotoId");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique();
+
+                    b.ToTable("Photo");
+                });
+
             modelBuilder.Entity("Api.Entities.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -28,15 +65,17 @@ namespace Api.Migrations
 
                     b.Property<string>("Body");
 
-                    b.Property<string>("ImagePath");
-
-                    b.Property<bool>("IsActive");
+                    b.Property<int?>("ImageId");
 
                     b.Property<DateTime>("Timestamp");
 
                     b.Property<string>("Title");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("Posts");
                 });
@@ -204,6 +243,21 @@ namespace Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Api.Entities.Photo", b =>
+                {
+                    b.HasOne("Api.Entities.Image", "Image")
+                        .WithOne("Photo")
+                        .HasForeignKey("Api.Entities.Photo", "ImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Api.Entities.Post", b =>
+                {
+                    b.HasOne("Api.Entities.Image", "Image")
+                        .WithOne("Post")
+                        .HasForeignKey("Api.Entities.Post", "ImageId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

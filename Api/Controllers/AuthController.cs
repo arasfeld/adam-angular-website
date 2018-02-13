@@ -43,6 +43,29 @@ namespace Api.Controllers
             return new OkObjectResult(jwt);
         }
 
+        // POST api/auth/adduser
+        [HttpPost("adduser")]
+        public async Task<IActionResult> Post([FromBody]Registration model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            User userIdentity = new User
+            {
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(userIdentity, model.Password);
+
+            if (!result.Succeeded) return new BadRequestObjectResult("");
+
+            return new OkObjectResult("Account created");
+        }
+
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))

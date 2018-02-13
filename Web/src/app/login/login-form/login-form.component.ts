@@ -36,7 +36,7 @@ export class LoginFormComponent implements OnInit {
         .finally(() => this.isRequesting = false)
         .subscribe(result => {         
           if (result) {
-             this.router.navigate(['/dashboard/home']);             
+             this.router.navigate(['']);             
           }
         },
         error => {

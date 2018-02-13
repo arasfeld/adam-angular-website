@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/modules/shared.module';
+import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
@@ -21,6 +21,7 @@ import { AuthGuard } from '../auth.guard';
     FormsModule,
     FlexLayoutModule,
     MaterialModule,
+    ReactiveFormsModule,
     routing,
     SharedModule
   ],
