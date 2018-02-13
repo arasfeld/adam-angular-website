@@ -12,24 +12,22 @@ import { routing } from './app.routing';
 
 /* App Root */
 import { AppComponent } from './app.component';
-import { AlbumComponent } from './album/album.component';
-import { BlogComponent } from './blog/blog.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ResumeComponent } from './resume/resume.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
-/* Admin Imports */
-import { AdminModule } from './admin/admin.module';
+/* Album Imports */
+import { AlbumModule } from './album/album.module';
+/* Blog Imports */
+import { BlogModule } from './blog/blog.module';
 /* Login Imports */
 import { LoginModule }  from './login/login.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AlbumComponent,
-    BlogComponent,
     ContactComponent,
     HomeComponent,
     ResumeComponent,
@@ -45,7 +43,8 @@ import { LoginModule }  from './login/login.module';
     FlexLayoutModule,
     MaterialModule,
     /* App Modules */
-    AdminModule,
+    AlbumModule,
+    BlogModule,
     LoginModule,
     routing
   ],

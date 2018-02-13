@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    Album
+  </mat-card-content>
+</mat-card>
+
+<button mat-mini-fab *ngIf="user.isLoggedIn()" class="add-button" color="primary" routerLink="/photo">
+  <mat-icon>add</mat-icon>
+</button>

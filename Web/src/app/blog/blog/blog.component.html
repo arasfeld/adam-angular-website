@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    Blog
+  </mat-card-content>
+</mat-card>
+
+<a mat-mini-fab *ngIf="user.isLoggedIn()" class="add-button" color="primary" routerLink="/post">
+  <mat-icon>add</mat-icon>
+</a>

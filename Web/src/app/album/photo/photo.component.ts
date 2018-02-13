@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AdminService } from '../admin.service';
+import { AlbumService } from '../album.service';
 
 @Component({
-  selector: 'admin-photos',
-  templateUrl: './photos.component.html',
-  styleUrls: ['./photos.component.scss']
+  selector: 'album-photo',
+  templateUrl: './photo.component.html',
+  styleUrls: ['./photo.component.scss']
 })
-export class PhotosComponent implements OnInit {
+export class PhotoComponent implements OnInit {
   photoForm: FormGroup;
   isRequesting: boolean;
   imgSrc: string;
   submitted: boolean = false;
 
   constructor(
-    private adminService: AdminService,
+    private albumService: AlbumService,
     private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class PhotosComponent implements OnInit {
     this.isRequesting = true;
     let file = this.photoForm.value.file;
     if (this.photoForm.valid && file.files && file.files[0]) {
-      this.adminService.postPhoto(file.files[0])
+      this.albumService.addPhoto(file.files[0])
         .subscribe(response => {
           console.log(response);
         },

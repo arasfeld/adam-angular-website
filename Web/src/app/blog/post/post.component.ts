@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AdminService } from '../admin.service';
+import { BlogService } from '../blog.service';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
-  selector: 'admin-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss']
+  selector: 'blog-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostComponent implements OnInit {
   postForm: FormGroup;
   isRequesting: boolean;
   imgSrc: string;
   submitted: boolean = false;
 
   constructor(
-    private adminService: AdminService,
+    private blogService: BlogService,
     private fb: FormBuilder) {}
 
   ngOnInit() {

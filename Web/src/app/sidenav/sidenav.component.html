@@ -20,22 +20,8 @@
     <mat-icon>mail</mat-icon>
     <span>Contact</span>
   </a>
-
-  <div *ngIf="userService.isLoggedIn()">
-    <mat-divider></mat-divider>
-
-    <h3 matSubheader>Admin</h3>
-    <a mat-list-item routerLink="admin/posts">
-      <mat-icon>rate_review</mat-icon>
-      <span>Manage Blog</span>
-    </a>
-    <a mat-list-item routerLink="admin/photos">
-      <mat-icon>photo_library</mat-icon>
-      <span>Manage Album</span>
-    </a>
-    <a mat-list-item (click)="logout()">
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Logout</span>
-    </a>
-  </div>
+  <a mat-list-item *ngIf="userService.isLoggedIn()" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Logout</span>
+  </a>
 </mat-nav-list>

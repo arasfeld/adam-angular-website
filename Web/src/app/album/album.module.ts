@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 
-import { routing } from './admin.routing';
-import { PhotosComponent } from './photos/photos.component';
-import { PostsComponent } from './posts/posts.component';
-import { RootComponent } from './root/root.component';
+import { AlbumComponent } from './album/album.component';
+import { PhotoComponent } from './photo/photo.component';
 
-import { AdminService } from './admin.service';
-
-import { AuthGuard } from '../auth.guard';
+import { AlbumService } from './album.service';
 
 @NgModule({
   imports: [
@@ -22,18 +19,16 @@ import { AuthGuard } from '../auth.guard';
     FlexLayoutModule,
     MaterialModule,
     ReactiveFormsModule,
-    routing,
+    RouterModule,
     SharedModule
   ],
   declarations: [
-    PhotosComponent,
-    PostsComponent,
-    RootComponent
+    AlbumComponent,
+    PhotoComponent
   ],
   exports: [],
   providers: [
-    AuthGuard,
-    AdminService
+    AlbumService
   ]
 })
-export class AdminModule { }
+export class AlbumModule { }
