@@ -2,21 +2,24 @@
   <mat-card>
     <mat-card-content>
       <div fxLayout="row">
-        <div fxLayout="column" fxFlex>
+        <div fxLayout="column" fxFlex="75">
           <mat-form-field>
             <input matInput formControlName="title" placeholder="Title"/>
-          </mat-form-field>
-    
-          <mat-form-field>
-            <input matInput formControlName="caption" placeholder="Caption"/>
-          </mat-form-field>
-    
-          <mat-form-field>
-            <app-input-file formControlName="file" placeholder="File" valuePlaceholder="No file selected" required></app-input-file>
-            <mat-icon matSuffix>folder</mat-icon>
-            <mat-error *ngIf="photoForm.controls['file'].errors && photoForm.controls['file'].errors.required">
-              Must select a file
+            <mat-error *ngIf="postForm.controls['title'].errors && postForm.controls['title'].errors.required">
+              Title is <strong>required</strong>
             </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field>
+            <textarea matInput formControlName="body" placeholder="Body" rows="10"></textarea>
+            <mat-error *ngIf="postForm.controls['body'].errors && postForm.controls['body'].errors.required">
+              Body is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field>
+            <app-input-file formControlName="file" placeholder="File" valuePlaceholder="No file selected"></app-input-file>
+            <mat-icon matSuffix>folder</mat-icon>
           </mat-form-field>
         </div>
         <div fxLayoutAlign="center center" fxFlex [ngSwitch]="imgSrc">
@@ -32,7 +35,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-button type="submit">Upload</button>
+      <button mat-button type="submit" color="primary">Save</button>
     </mat-card-actions>
   </mat-card>
 </form>

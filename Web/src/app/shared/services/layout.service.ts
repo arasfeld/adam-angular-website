@@ -1,37 +1,41 @@
-import { Injectable } from '@angular/core';
-
-import { BehaviorSubject, Observable } from 'rxjs/Rx';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
+import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 
 @Injectable()
-export class LayoutService {
-  // Observable sidenav source
-  private _sidenavStatusSource = new BehaviorSubject<boolean>(false);
-  // Observable sidenav stream
-  sidenavStatus$ = this._sidenavStatusSource.asObservable();
+export class LayoutService implements OnDestroy {
+  private watcher: Subscription;
+  private _sidenavOpen = false;
+  private _showMenuIcon = false;
 
-  private sidenavOpen = false;
-
-  constructor() {
-    this._sidenavStatusSource.next(this.sidenavOpen);
-  }
-
-  openSidenav() {
-    this.sidenavOpen = true;
-    this._sidenavStatusSource.next(this.sidenavOpen);
-  }
-
-  closeSidenav() {
-    this.sidenavOpen = false;
-    this._sidenavStatusSource.next(this.sidenavOpen);
+  constructor(private media: ObservableMedia) {
+    this.watcher = media.subscribe((change: MediaChange) => {
+      let activeMediaQuery = change.mqAlias;
+      if (change.mqAlias == 'xs') {
+        this._sidenavOpen = false;
+        this._showMenuIcon = true;
+      }
+      else {
+        this._sidenavOpen = true;
+        this._showMenuIcon = false;
+      }
+    });
   }
 
   toggleSidenav() {
-    this.sidenavOpen = !this.sidenavOpen;
-    this._sidenavStatusSource.next(this.sidenavOpen);
+    this._sidenavOpen = !this._sidenavOpen;
   }
 
   isSidenavOpen() {
-    return this.sidenavOpen;
+    return this._sidenavOpen;
+  }
+
+  showMenuIcon() {
+    return this._showMenuIcon;
+  }
+
+  ngOnDestroy() {
+    this.watcher.unsubscribe();
   }
 }
 

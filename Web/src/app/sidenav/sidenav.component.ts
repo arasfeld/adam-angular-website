@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../shared/services/user.service';
@@ -13,10 +14,14 @@ export class SidenavComponent implements OnInit, OnDestroy {
   status: boolean;
   subscription: Subscription;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   logout() {
-     this.userService.logout();       
+     this.userService.logout();
+     this.router.navigate(['']);     
   }
 
   ngOnInit() {

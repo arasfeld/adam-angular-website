@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <button mat-icon-button *ngIf="showIcon" (click)="toggleSidenav()">
+    <button mat-icon-button *ngIf="layout.showMenuIcon()" (click)="layout.toggleSidenav()">
       <mat-icon aria-label="Toggle navigation">menu</mat-icon>
     </button>
   </mat-toolbar-row>

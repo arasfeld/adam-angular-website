@@ -15,7 +15,11 @@ export class LoginFormComponent implements OnInit {
   isRequesting: boolean;
   submitted: boolean = false;
 
-  constructor(private userService: UserService, private router: Router, private fb: FormBuilder) { }
+  constructor(
+    private userService: UserService, 
+    private router: Router, 
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.createForm();
