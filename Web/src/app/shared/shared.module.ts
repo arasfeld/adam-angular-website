@@ -6,24 +6,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
-import { InputFileComponent } from './components/input-file/input-file.component';
-
-import { LayoutService } from './services/layout.service';
-import { UserService } from './services/user.service';
+import { FileInputComponent } from './components/file-input/file-input.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    InputFileComponent
+    FileInputComponent
   ],
   exports: [
-    InputFileComponent
+    FileInputComponent
   ],
-  providers: [
-    LayoutService,
-    UserService
-  ]
+  providers: []
 })
 export class SharedModule { }
