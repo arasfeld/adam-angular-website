@@ -1,6 +1,8 @@
 ﻿using Api.Auth;
+using Api.Config;
 using Api.Data;
 using Api.Entities;
+using Api.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,9 +39,16 @@ namespace Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("Api")));
 
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.Configure<FileSettings>(Configuration.GetSection("FileSettings"));
 
             // jwt wire up
             // Get options from app settings

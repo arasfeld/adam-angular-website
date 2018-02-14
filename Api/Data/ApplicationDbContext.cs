@@ -15,6 +15,8 @@ namespace Api.Data
         {
         }
 
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<Post> Posts { get; set; }
     }
 }

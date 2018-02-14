@@ -33,7 +33,7 @@ namespace Api.Migrations
 
                     b.HasKey("ImageId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Api.Entities.Photo", b =>
@@ -54,7 +54,7 @@ namespace Api.Migrations
                     b.HasIndex("ImageId")
                         .IsUnique();
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Api.Entities.Post", b =>

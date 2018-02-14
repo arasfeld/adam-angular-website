@@ -7,12 +7,12 @@ namespace Api.Repositories
     {
         IEnumerable<Photo> Browse();
 
-        Post Read(int postId);
+        Photo Read(int photoId);
 
-        Post Edit(Post post);
+        Photo Edit(Photo photo);
 
-        Post Add(Post post);
+        Photo Add(Photo photo);
 
-        bool Delete(int postId);
+        bool Delete(int photoId);
     }
 }

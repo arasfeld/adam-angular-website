@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Api.Entities;
+using Api.Repositories;
+using Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Api.Controllers
 {
@@ -11,38 +11,48 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class PostsController : Controller
     {
+        private readonly PostService postService;
+
+        public PostsController(IFileRepository fileRepository, IImageRepository imageRepository, IPostRepository postRepository)
+        {
+            postService = new PostService(fileRepository, imageRepository, postRepository);
+        }
+
         // GET api/posts
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Post> Get()
         {
-            return new string[] { "value1", "value2" };
+            return postService.Browse();
         }
 
         // GET api/posts/5
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Post Get(int id)
         {
-            return "value";
+            return postService.Read(id);
         }
 
         // POST api/posts
         [HttpPost]
-        public void Post([FromBody]string value)
+        public Post Post([FromBody]Post post)
         {
+            return postService.Add(post);
         }
 
-        // PUT api/posts/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // PUT api/posts
+        [HttpPut]
+        public Post Put([FromBody]Post post)
         {
+            return postService.Edit(post);
         }
 
         // DELETE api/posts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return postService.Delete(id);
         }
     }
 }

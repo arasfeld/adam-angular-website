@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Api.Entities;
+using Api.Repositories;
+using Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -13,20 +15,27 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class PhotosController : Controller
     {
+        private readonly PhotoService photoService;
+
+        public PhotosController(IFileRepository fileRepository, IImageRepository imageRepository, IPhotoRepository photoRepository)
+        {
+            photoService = new PhotoService(fileRepository, imageRepository, photoRepository);
+        }
+
         // GET api/photos
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Photo> Get()
         {
-            return new string[] { "value1", "value2" };
+            return photoService.Browse();
         }
 
         // GET api/photos/5
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Photo Get(int id)
         {
-            return "value";
+            return photoService.Read(id);
         }
 
         // POST api/photos
@@ -44,16 +53,18 @@ namespace Api.Controllers
             }
         }
 
-        // PUT api/photos/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // PUT api/photos
+        [HttpPut]
+        public Photo Put([FromBody]Photo photo)
         {
+            return photoService.Edit(photo);
         }
 
         // DELETE api/photos/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return photoService.Delete(id);
         }
     }
 }
