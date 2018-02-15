@@ -1,11 +1,12 @@
 ﻿using Api.Entities;
+using Api.Filters;
 using System.Collections.Generic;
 
 namespace Api.Repositories
 {
     public interface IPostRepository
     {
-        IEnumerable<Post> Browse();
+        IEnumerable<Post> Browse(PostFilter filter);
 
         Post Read(int postId);
 

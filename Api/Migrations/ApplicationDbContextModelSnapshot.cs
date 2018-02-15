@@ -25,7 +25,7 @@ namespace Api.Migrations
                     b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Extension");
+                    b.Property<string>("ContentType");
 
                     b.Property<string>("FileName");
 

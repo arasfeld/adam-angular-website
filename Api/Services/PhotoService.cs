@@ -1,9 +1,10 @@
 ﻿using Api.Entities;
+using Api.Filters;
 using Api.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Services
 {
@@ -20,9 +21,15 @@ namespace Api.Services
             _photoRepository = photoRepository;
         }
 
-        public IEnumerable<Photo> Browse()
+        public IEnumerable<Photo> Browse(PhotoFilter filter)
         {
-            return _photoRepository.Browse();
+            IEnumerable<Photo> photos = _photoRepository.Browse(filter);
+            foreach (Photo photo in photos.Where(p => p.Image != null))
+            {
+                byte[] imageData = _fileRepository.Get(photo.Image.FileName);
+                photo.Image.Data = imageData;
+            }
+            return photos;
         }
 
         public Photo Read(int photoId)
@@ -35,8 +42,20 @@ namespace Api.Services
             return _photoRepository.Edit(photo);
         }
 
-        public Photo Add(Photo photo)
+        public Photo Add(Photo photo, IFormFile file)
         {
+            if (file != null)
+            {
+                bool fileAdded = _fileRepository.Add(file);
+                Image image = new Image
+                {
+                    FileName = file.FileName,
+                    ContentType = file.ContentType,
+                    Timestamp = DateTime.UtcNow
+                };
+                image = _imageRepository.Add(image);
+                photo.ImageId = image.ImageId;
+            }
             photo.Timestamp = DateTime.UtcNow;
             return _photoRepository.Add(photo);
         }

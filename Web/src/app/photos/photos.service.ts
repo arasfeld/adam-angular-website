@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Rx'; 
-
 import { environment } from '../../environments/environment';
 
-@Injectable()
+import { Photo } from './photo.model';
 
+@Injectable()
 export class PhotosService {
   API_BASE_URL: string = ''; 
 
@@ -15,26 +14,28 @@ export class PhotosService {
   }
 
   getPhotos() {
-    return null;
+    return this.http.get<Photo[]>(`${this.API_BASE_URL}/Photos`);
   }
 
   getPhoto(id: number) {
-    return null;
+    return this.http.get<Photo>(`${this.API_BASE_URL}/Photos/${id}`);
   }
 
-  addPhoto(file: any) {
-    let fileData = new FormData();
-    fileData.append("file", file);
+  addPhoto(photo: FormData) {
     let authToken = localStorage.getItem('auth_token');
     let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
-    return this.http.post(`${this.API_BASE_URL}/Photos`, fileData, { 'headers': headers });
+    return this.http.post(`${this.API_BASE_URL}/Photos`, photo, { 'headers': headers });
   }
 
-  editPhoto(file: any) {
-    return null;
+  editPhoto(photo: FormData) {
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
+    return this.http.put(`${this.API_BASE_URL}/Photos`, photo, { 'headers': headers });
   }
 
   deletePhoto(id: number) {
-    return null;
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
+    return this.http.delete(`${this.API_BASE_URL}/Photos/${id}`, { 'headers': headers });
   }
 }

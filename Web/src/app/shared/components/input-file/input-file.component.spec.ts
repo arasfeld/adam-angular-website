@@ -2,16 +2,16 @@ import { ReactiveFormsModule, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '
 import { MatInputModule, MatButtonModule, MatIconModule, MatFormFieldModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileInputComponent } from './file-input.component';
+import { InputFileComponent } from './input-file.component';
 
-describe('FileInputComponent', () => {
-  let component: FileInputComponent;
-  let fixture: ComponentFixture<FileInputComponent>;
+describe('InputFileComponent', () => {
+  let component: InputFileComponent;
+  let fixture: ComponentFixture<InputFileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        FileInputComponent
+        InputFileComponent
       ],
       imports: [
         ReactiveFormsModule,
@@ -30,7 +30,7 @@ describe('FileInputComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileInputComponent);
+    fixture = TestBed.createComponent(InputFileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,9 @@
 ﻿using Api.Entities;
+using Api.Filters;
 using Api.Repositories;
 using Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -21,9 +23,9 @@ namespace Api.Controllers
         // GET api/posts
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<Post> Get()
+        public IEnumerable<Post> Get([FromQuery]PostFilter filter)
         {
-            return postService.Browse();
+            return postService.Browse(filter);
         }
 
         // GET api/posts/5
@@ -36,9 +38,15 @@ namespace Api.Controllers
 
         // POST api/posts
         [HttpPost]
-        public Post Post([FromBody]Post post)
+        public Post Post()
         {
-            return postService.Add(post);
+            Post post = new Post
+            {
+                Title = Request.Form["title"],
+                Body = Request.Form["body"]
+            };
+            IFormFile file = Request.Form.Files["file"];
+            return postService.Add(post, file);
         }
 
         // PUT api/posts

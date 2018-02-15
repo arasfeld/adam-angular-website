@@ -12,4 +12,4 @@ export class FileInput {
   get fileNames(): string {
     return this._fileNames;
   }
-} 
+}

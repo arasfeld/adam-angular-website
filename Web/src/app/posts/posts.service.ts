@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx'; 
 import { environment } from '../../environments/environment';
 
-@Injectable()
+import { Post } from './post.model';
 
+@Injectable()
 export class PostsService {
   API_BASE_URL: string = ''; 
 
@@ -13,24 +14,34 @@ export class PostsService {
   }
 
   getPosts() {
-    return null;
+    return this.http.get<Post[]>(`${this.API_BASE_URL}/Posts`);
   }
 
   getPost(id: number) {
-    return null;
+    return this.http.get<Post>(`${this.API_BASE_URL}/Posts/${id}`);
   }
 
-  addPost(post: any) {
+  addPost(post: Post) {
     let authToken = localStorage.getItem('auth_token');
     let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
-    return this.http.post(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });
+    return this.http.post<Post>(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });
   }
 
-  editPost(file: any) {
-    return null;
+  addPostNew(post: FormData) {
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
+    return this.http.post<Post>(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });
+  }
+
+  editPost(post: Post) {
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
+    return this.http.put<Post>(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });
   }
 
   deletePost(id: number) {
-    return null;
+    let authToken = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
+    return this.http.delete(`${this.API_BASE_URL}/Posts/${id}`, { 'headers': headers });
   }
 }

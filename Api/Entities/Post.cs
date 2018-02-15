@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Api.Validation;
+using FluentValidation.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Entities
 {
+    [Validator(typeof(PostValidator))]
     public class Post
     {
         [Key]

@@ -1,5 +1,7 @@
 ﻿using Api.Entities;
+using Api.Filters;
 using Api.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,15 @@ namespace Api.Services
             _postRepository = postRepository;
         }
 
-        public IEnumerable<Post> Browse()
+        public IEnumerable<Post> Browse(PostFilter filter)
         {
-            return _postRepository.Browse();
+            IEnumerable<Post> posts = _postRepository.Browse(filter);
+            foreach (Post post in posts.Where(p => p.Image != null))
+            {
+                byte[] imageData = _fileRepository.Get(post.Image.FileName);
+                post.Image.Data = imageData;
+            }
+            return posts;
         }
 
         public Post Read(int postId)
@@ -35,8 +43,20 @@ namespace Api.Services
             return _postRepository.Edit(post);
         }
 
-        public Post Add(Post post)
+        public Post Add(Post post, IFormFile file)
         {
+            if (file != null)
+            {
+                bool fileAdded = _fileRepository.Add(file);
+                Image image = new Image
+                {
+                    FileName = file.FileName,
+                    ContentType = file.ContentType,
+                    Timestamp = DateTime.UtcNow
+                };
+                image = _imageRepository.Add(image);
+                post.ImageId = image.ImageId;
+            }
             post.Timestamp = DateTime.UtcNow;
             return _postRepository.Add(post);
         }

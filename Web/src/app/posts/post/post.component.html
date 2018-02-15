@@ -1,4 +1,6 @@
-<form [formGroup]="postForm" (ngSubmit)="submit()">
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<form [formGroup]="postForm" (ngSubmit)="submit()" *ngIf="!loading">
   <mat-card>
     <mat-card-content>
       <div fxLayout="row">
@@ -18,7 +20,7 @@
           </mat-form-field>
     
           <mat-form-field>
-            <app-file-input formControlName="file" placeholder="File" valuePlaceholder="No file selected"></app-file-input>
+            <app-input-file formControlName="file" placeholder="File" valuePlaceholder="No file selected"></app-input-file>
             <mat-icon matSuffix>folder</mat-icon>
           </mat-form-field>
         </div>

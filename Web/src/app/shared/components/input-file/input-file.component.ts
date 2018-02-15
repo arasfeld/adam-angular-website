@@ -4,17 +4,17 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { FileInput } from './file-input.model';
+import { FileInput } from '../../models/file-input.model';
 
 @Component({
-  selector: 'app-file-input',
-  templateUrl: './file-input.component.html',
-  styleUrls: ['./file-input.component.scss'],
+  selector: 'app-input-file',
+  templateUrl: './input-file.component.html',
+  styleUrls: ['./input-file.component.scss'],
   providers: [
-    { provide: MatFormFieldControl, useExisting: FileInputComponent }
+    { provide: MatFormFieldControl, useExisting: InputFileComponent }
   ]
 })
-export class FileInputComponent implements MatFormFieldControl<FileInput>, ControlValueAccessor, OnInit, OnDestroy {
+export class InputFileComponent implements MatFormFieldControl<FileInput>, ControlValueAccessor, OnInit, OnDestroy {
 
   static nextId = 0;
 
@@ -28,7 +28,7 @@ export class FileInputComponent implements MatFormFieldControl<FileInput>, Contr
   @Input() valuePlaceholder: string;
   @Input() multiple: boolean;
 
-  @HostBinding() id = `app-file-input-${FileInputComponent.nextId++}`;
+  @HostBinding() id = `app-input-file-${InputFileComponent.nextId++}`;
   @HostBinding('attr.aria-describedby') describedBy = '';
 
   @Input() get value(): FileInput | null {

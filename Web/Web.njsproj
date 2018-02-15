@@ -53,8 +53,9 @@
     <Folder Include="src\app\posts\post\" />
     <Folder Include="src\app\shared\" />
     <Folder Include="src\app\shared\components\" />
-    <Folder Include="src\app\shared\components\file-input\" />
+    <Folder Include="src\app\shared\components\input-file\" />
     <Folder Include="src\app\shared\directives\" />
+    <Folder Include="src\app\shared\models\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\environments\" />
   </ItemGroup>
@@ -98,9 +99,10 @@
     <TypeScriptCompile Include="src\app\posts\posts.service.ts" />
     <TypeScriptCompile Include="src\app\posts\post\post.component.spec.ts" />
     <TypeScriptCompile Include="src\app\posts\post\post.component.ts" />
-    <TypeScriptCompile Include="src\app\shared\components\file-input\file-input.component.spec.ts" />
-    <TypeScriptCompile Include="src\app\shared\components\file-input\file-input.component.ts" />
-    <TypeScriptCompile Include="src\app\shared\components\file-input\file-input.model.ts" />
+    <TypeScriptCompile Include="src\app\shared\components\input-file\input-file.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\shared\components\input-file\input-file.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\models\file-input.model.ts" />
+    <TypeScriptCompile Include="src\app\shared\models\image.model.ts" />
     <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
@@ -138,8 +140,8 @@
     <Content Include="src\app\posts\post-list\post-list.component.scss" />
     <Content Include="src\app\posts\post\post.component.html" />
     <Content Include="src\app\posts\post\post.component.scss" />
-    <Content Include="src\app\shared\components\file-input\file-input.component.html" />
-    <Content Include="src\app\shared\components\file-input\file-input.component.scss" />
+    <Content Include="src\app\shared\components\input-file\input-file.component.html" />
+    <Content Include="src\app\shared\components\input-file\input-file.component.scss" />
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\assets\me-purple.jpg" />
     <Content Include="src\favicon.ico" />

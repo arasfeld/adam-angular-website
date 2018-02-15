@@ -1,4 +1,6 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="!loading">
   <mat-card>
     <mat-card-content>
       <mat-form-field>

@@ -1,13 +1,11 @@
 ﻿using Api.Entities;
+using Api.Filters;
 using Api.Repositories;
 using Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -25,9 +23,9 @@ namespace Api.Controllers
         // GET api/photos
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<Photo> Get()
+        public IEnumerable<Photo> Get([FromQuery]PhotoFilter filter)
         {
-            return photoService.Browse();
+            return photoService.Browse(filter);
         }
 
         // GET api/photos/5
@@ -40,17 +38,15 @@ namespace Api.Controllers
 
         // POST api/photos
         [HttpPost]
-        public async Task Post(IFormFile file)
+        public Photo Post()
         {
-            if (file == null) throw new Exception("File is null");
-            if (file.Length == 0) throw new Exception("File is empty");
-
-            string filePath = Path.GetTempFileName();
-
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            Photo photo = new Photo
             {
-                await file.CopyToAsync(fileStream);
-            }
+                Title = Request.Form["title"],
+                Caption = Request.Form["caption"]
+            };
+            IFormFile file = Request.Form.Files["file"];
+            return photoService.Add(photo, file);
         }
 
         // PUT api/photos

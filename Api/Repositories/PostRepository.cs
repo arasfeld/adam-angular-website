@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Api.Data;
+using Api.Entities;
+using Api.Filters;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Api.Data;
-using Api.Entities;
 
 namespace Api.Repositories
 {
@@ -15,14 +17,21 @@ namespace Api.Repositories
             _db = db;
         }
 
-        public IEnumerable<Post> Browse()
+        public IEnumerable<Post> Browse(PostFilter filter)
         {
-            return _db.Posts;
+            return _db.Posts
+                .Include(p => p.Image)
+                .OrderByDescending(p => p.Timestamp)
+                .Where(MatchesFilter(filter))
+                .Skip(filter.PageSize * (filter.PageNumber - 1))
+                .Take(filter.PageSize);
         }
 
         public Post Read(int postId)
         {
-            return _db.Posts.FirstOrDefault(p => p.PostId == postId);
+            return _db.Posts
+                .Include(p => p.Image)
+                .FirstOrDefault(p => p.PostId == postId);
         }
 
         public Post Edit(Post post)
@@ -46,6 +55,16 @@ namespace Api.Repositories
             _db.Posts.Remove(post);
             _db.SaveChanges();
             return true;
+        }
+
+        private Func<Post, bool> MatchesFilter(PostFilter filter)
+        {
+            if (filter == null) return p => true;
+
+            return p => 
+                (!filter.PostId.HasValue || filter.PostId.Value == p.PostId) &&
+                (!filter.StartTime.HasValue || filter.StartTime.Value <= p.Timestamp) &&
+                (!filter.EndTime.HasValue || filter.EndTime.Value >= p.Timestamp);
         }
     }
 }

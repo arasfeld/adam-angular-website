@@ -6,17 +6,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
-import { FileInputComponent } from './components/file-input/file-input.component';
+import { InputFileComponent } from './components/input-file/input-file.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    FileInputComponent
+    InputFileComponent
   ],
   exports: [
-    FileInputComponent
+    InputFileComponent
   ],
   providers: []
 })

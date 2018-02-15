@@ -57,7 +57,7 @@ namespace Api.Migrations
                 {
                     ImageId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Extension = table.Column<string>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true),
                     FileName = table.Column<string>(nullable: true),
                     Timestamp = table.Column<DateTime>(nullable: false)
                 },

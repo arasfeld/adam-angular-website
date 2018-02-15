@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  isRequesting: boolean;
-  submitted: boolean = false;
+  loading: boolean = false;
 
   constructor(
-    private userService: UserService, 
-    private router: Router, 
+    private userService: UserService,
+    private router: Router,
+    private snackBar: MatSnackBar,
     private fb: FormBuilder
   ) {}
 
@@ -33,18 +34,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.submitted = true;
-    this.isRequesting = true;
+    this.loading = true;
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value.email, this.loginForm.value.password)
-        .finally(() => this.isRequesting = false)
+        .finally(() => this.loading = false)
         .subscribe(result => {         
           if (result) {
-             this.router.navigate(['']);             
+            this.snackBar.open('Successfully logged in.', null, { duration: 3000, panelClass: 'snackbar-success' });
+            this.router.navigate(['']);             
           }
         },
         error => {
-          console.log(error);
+          this.snackBar.open('Error logging in.', null, { duration: 3000, panelClass: 'snackbar-error' });
         });
     }
   }

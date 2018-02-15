@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
 
 @Component({
-  selector: 'photo',
+  selector: 'app-photo',
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.scss']
 })
 export class PhotoComponent implements OnInit {
   photoForm: FormGroup;
-  isRequesting: boolean;
+  loading: boolean = false;
   imgSrc: string;
-  submitted: boolean = false;
 
   constructor(
     private photosService: PhotosService,
@@ -45,11 +45,12 @@ export class PhotoComponent implements OnInit {
   }
 
   submit(): void {
-    this.submitted = true;
-    this.isRequesting = true;
+    this.loading = true;
     let file = this.photoForm.value.file;
     if (this.photoForm.valid && file.files && file.files[0]) {
-      this.photosService.addPhoto(file.files[0])
+      let photo = this.createFormData();
+      this.photosService.addPhoto(photo)
+        .finally(() => this.loading = false)
         .subscribe(response => {
           console.log(response);
         },
@@ -57,5 +58,17 @@ export class PhotoComponent implements OnInit {
           console.log(err);
         });
     }
+  }
+
+  createFormData(): FormData {
+    let formData = new FormData();
+    formData.append('title', this.photoForm.value.title);
+    formData.append('caption', this.photoForm.value.caption);
+
+    // Add image file
+    let file = this.photoForm.value.file;
+    formData.append('file', file.files[0]);
+
+    return formData;
   }
 }

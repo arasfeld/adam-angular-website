@@ -11,7 +11,7 @@ using System;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180213220934_InitialCreate")]
+    [Migration("20180215133350_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Api.Migrations
                     b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Extension");
+                    b.Property<string>("ContentType");
 
                     b.Property<string>("FileName");
 
