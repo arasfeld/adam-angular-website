@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../user.service';
@@ -18,8 +19,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private domSanitizer: DomSanitizer,
+    private matIconRegistry: MatIconRegistry
+  ) {
+    this.matIconRegistry.addSvgIcon('github', domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/github.svg'));
+  }
 
   logout() {
      this.userService.logout();

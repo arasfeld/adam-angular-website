@@ -20,6 +20,10 @@
     <mat-icon>mail</mat-icon>
     <span>Contact</span>
   </a>
+  <a mat-list-item href="https://github.com/arasfeld" target="_blank">
+    <mat-icon svgIcon="github"></mat-icon>
+    <span>GitHub</span>
+  </a>
   <a mat-list-item *ngIf="userService.isLoggedIn()" (click)="logout()">
     <mat-icon>exit_to_app</mat-icon>
     <span>Logout</span>
