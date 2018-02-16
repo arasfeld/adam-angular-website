@@ -7,15 +7,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
 import { InputFileComponent } from './components/input-file/input-file.component';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
+    AutoFocusDirective,
     InputFileComponent
   ],
   exports: [
+    AutoFocusDirective,
     InputFileComponent
   ],
   providers: []

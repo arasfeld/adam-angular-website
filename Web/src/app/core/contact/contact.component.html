@@ -3,7 +3,7 @@
     <mat-card-content>
       <div fxLayout="column">
         <mat-form-field>
-          <input matInput formControlName="name" placeholder="Name">
+          <input matInput formControlName="name" placeholder="Name" autofocus>
           <mat-error *ngIf="contactForm.controls['name'].errors && contactForm.controls['name'].errors.required">
             Name is <strong>required</strong>
           </mat-error>

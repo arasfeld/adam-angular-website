@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
+import { LayoutService } from '../layout.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -16,11 +17,14 @@ export class LoginComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
+    private layout: LayoutService,
     private userService: UserService,
     private router: Router,
     private snackBar: MatSnackBar,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.layout.title = 'Login';
+  }
 
   ngOnInit() {
     this.createForm();

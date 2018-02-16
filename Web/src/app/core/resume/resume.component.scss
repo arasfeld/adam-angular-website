@@ -3,6 +3,7 @@
   width: 200px;
   height: 200px;
   margin: 1em auto;
+  margin-left: 50px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -10,6 +11,10 @@
   -moz-border-radius: 99em;
   border-radius: 99em;
   border: 5px solid #eee;
+}
+
+.contact-info {
+  margin-left: 50px;
 }
 
 mat-toolbar-row {

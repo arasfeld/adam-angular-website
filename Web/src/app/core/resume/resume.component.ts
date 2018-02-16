@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { LayoutService } from '../layout.service';
+
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html',
@@ -7,5 +9,7 @@ import { Component } from '@angular/core';
 })
 export class ResumeComponent {
  
-  constructor() {}   
+  constructor(private layout: LayoutService) {
+    this.layout.title = 'Resume';
+  }
 }

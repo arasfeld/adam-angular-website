@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { LayoutService } from '../layout.service';
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -13,9 +15,12 @@ export class ContactComponent implements OnInit {
   submitted: boolean = false;
 
   constructor(
+    private layout: LayoutService,
     private router: Router, 
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.layout.title = 'Contact Me';
+  }
 
   ngOnInit() {
     this.createForm();

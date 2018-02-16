@@ -3,22 +3,24 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="!loading">
   <mat-card>
     <mat-card-content>
-      <mat-form-field>
-        <input matInput type="email" placeholder="Email" formControlName="email">
-        <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.email && !loginForm.controls['email'].errors.required">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.required">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-    
-      <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password">
-        <mat-error *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].errors.required">
-          Password is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+      <div fxLayout="column">
+        <mat-form-field>
+          <input matInput type="email" placeholder="Email" formControlName="email">
+          <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.email && !loginForm.controls['email'].errors.required">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.required">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password">
+          <mat-error *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].errors.required">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
     </mat-card-content>
 
     <mat-card-actions>

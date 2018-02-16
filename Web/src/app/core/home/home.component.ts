@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { LayoutService } from '../layout.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,6 +9,8 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() {}
+  constructor(private layout: LayoutService) {
+    this.layout.title = '';
+  }
   
 }

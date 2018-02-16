@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
+import { LayoutService } from '../../core/layout.service';
 
 @Component({
   selector: 'app-photo',

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+import { LayoutService } from '../../core/layout.service';
 
 @Component({
   selector: 'app-post',

@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+import { LayoutService } from '../../core/layout.service';
 import { UserService } from '../../core/user.service';
 
 @Component({
@@ -15,10 +16,13 @@ export class PostListComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
+    private layout: LayoutService,
     private postsService: PostsService,
     private user: UserService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.layout.title = 'Blog';
+  }
 
   ngOnInit() {
     this.getPosts();
@@ -30,7 +34,6 @@ export class PostListComponent implements OnInit {
       .finally(() => this.loading = false)
       .subscribe((posts: Post[]) => {
         this.posts = posts;
-        console.log(posts);
       },
       (err: Response) => {
         this.snackBar.open('Error getting posts.', null, { duration: 3000, panelClass: 'snackbar-error' });
