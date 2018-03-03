@@ -35,11 +35,30 @@ namespace Api.Services
 
         public Post Read(int postId)
         {
-            return _postRepository.Read(postId);
+            Post post = _postRepository.Read(postId);
+            if (post.Image != null)
+            {
+                byte[] imageData = _fileRepository.Get(post.Image.FileName);
+                post.Image.Data = imageData;
+            }
+            return post;
         }
 
-        public Post Edit(Post post)
+        public Post Edit(Post post, IFormFile file)
         {
+            if (file != null)
+            {
+                bool fileAdded = _fileRepository.Add(file);
+                Image image = new Image
+                {
+                    FileName = file.FileName,
+                    ContentType = file.ContentType,
+                    Timestamp = DateTime.UtcNow
+                };
+                image = _imageRepository.Add(image);
+                post.ImageId = image.ImageId;
+            }
+            post.Timestamp = DateTime.UtcNow;
             return _postRepository.Edit(post);
         }
 

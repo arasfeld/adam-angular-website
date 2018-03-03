@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required]
     });
   }
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.value.email, this.loginForm.value.password)
+      this.userService.login(this.loginForm.value.username, this.loginForm.value.password)
         .finally(() => this.loading = false)
         .subscribe(result => {         
           if (result) {

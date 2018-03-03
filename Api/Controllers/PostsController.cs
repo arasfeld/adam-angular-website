@@ -51,9 +51,15 @@ namespace Api.Controllers
 
         // PUT api/posts
         [HttpPut]
-        public Post Put([FromBody]Post post)
+        public Post Put()
         {
-            return postService.Edit(post);
+            Post post = new Post
+            {
+                Title = Request.Form["title"],
+                Body = Request.Form["body"]
+            };
+            IFormFile file = Request.Form.Files["file"];
+            return postService.Edit(post, file);
         }
 
         // DELETE api/posts/5

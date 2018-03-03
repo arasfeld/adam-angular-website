@@ -1,49 +1,83 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Api.Data;
-using Api.Entities;
+﻿using Api.Entities;
+using Dapper;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace Api.Repositories
 {
     public class ImageRepository : IImageRepository
     {
-        private readonly ApplicationDbContext _db;
+        private readonly string _connectionString;
 
-        public ImageRepository(ApplicationDbContext db)
+        public ImageRepository(IConfiguration configuration)
         {
-            _db = db;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public IEnumerable<Image> Browse()
         {
-            return _db.Images;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                return connection.Query<Image>($@"
+                    SELECT * FROM [Images]");
+            }
         }
 
         public Image Read(int imageId)
         {
-            return _db.Images.FirstOrDefault(p => p.ImageId == imageId);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                return connection.QuerySingleOrDefault<Image>($@"
+                    SELECT * FROM [Images]
+                    WHERE [ImageId] = @{nameof(imageId)}",
+                    new { imageId });
+            }
         }
 
         public Image Edit(Image image)
         {
-            Image existingImage = _db.Images.FirstOrDefault(p => p.ImageId == image.ImageId);
-            _db.Entry(existingImage).CurrentValues.SetValues(image);
-            _db.SaveChanges();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                connection.Execute($@"
+                    UPDATE [Images] 
+                    SET [FileName] = @{nameof(Image.FileName)},
+                        [ContentType] = @{nameof(Image.ContentType)},
+                        [Timestamp] = GETUTCDATE()
+                    WHERE [ImageId] = @{nameof(Image.ImageId)}", image);
+            }
+
             return image;
         }
 
         public Image Add(Image image)
         {
-            _db.Images.Add(image);
-            _db.SaveChanges();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                image.ImageId = connection.QuerySingle<int>($@"
+                    INSERT INTO [Images] ([FileName], [ContentType], [Timestamp])
+                    VALUES (@{nameof(Image.FileName)}, @{nameof(Image.ContentType)}, GETUTCDATE());
+                    SELECT CAST(SCOPE_IDENTITY() as int)", image);
+            }
+
             return image;
         }
 
         public bool Delete(int imageId)
         {
-            Image image = _db.Images.FirstOrDefault(p => p.ImageId == imageId);
-            _db.Images.Remove(image);
-            _db.SaveChanges();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                connection.Execute($@"
+                    DELETE FROM [Images] 
+                    WHERE [ImageId] = @{nameof(imageId)}",
+                    new { imageId });
+            }
+            
             return true;
         }
     }

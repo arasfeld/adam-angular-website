@@ -5,12 +5,9 @@
     <mat-card-content>
       <div fxLayout="column">
         <mat-form-field>
-          <input matInput type="email" placeholder="Email" formControlName="email">
-          <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.email && !loginForm.controls['email'].errors.required">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].errors.required">
-            Email is <strong>required</strong>
+          <input matInput placeholder="User Name" formControlName="username">
+          <mat-error *ngIf="loginForm.controls['username'].errors && loginForm.controls['username'].errors.required">
+            User name is <strong>required</strong>
           </mat-error>
         </mat-form-field>
       

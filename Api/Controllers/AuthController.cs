@@ -2,9 +2,15 @@
 using Api.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
@@ -14,14 +20,12 @@ namespace Api.Controllers
     public class AuthController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly IJwtFactory _jwtFactory;
-        private readonly JwtIssuerOptions _jwtOptions;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(UserManager<User> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthController(UserManager<User> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
-            _jwtFactory = jwtFactory;
-            _jwtOptions = jwtOptions.Value;
+            _configuration = configuration;
         }
 
         // POST api/auth/login
@@ -39,8 +43,33 @@ namespace Api.Controllers
                 return BadRequest();
             }
 
-            string jwt = await JwtHelpers.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
-            return new OkObjectResult(jwt);
+            // Create the JWT security token and encode it.
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: _configuration["JwtSettings:Issuer"],
+                audience: _configuration["JwtSettings:Audience"],
+                claims: new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, credentials.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, Math.Round((DateTime.UtcNow -
+                               new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
+                              .TotalSeconds).ToString(), ClaimValueTypes.Integer64),
+                    identity.FindFirst("role"),
+                    identity.FindFirst("id")
+                },
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(120)),
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JwtSettings:Key"])), SecurityAlgorithms.HmacSha256));
+            string encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            var response = new
+            {
+                id = identity.Claims.Single(c => c.Type == "id").Value,
+                auth_token = encodedJwt,
+                expires_in = (int)TimeSpan.FromMinutes(120).TotalSeconds
+            };
+
+            return Ok(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
         // POST api/auth/adduser
@@ -52,18 +81,12 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            User userIdentity = new User
-            {
-                UserName = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            };
+            User user = new User { UserName = model.UserName };
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
-            IdentityResult result = await _userManager.CreateAsync(userIdentity, model.Password);
+            if (!result.Succeeded) return BadRequest(result.Errors);
 
-            if (!result.Succeeded) return new BadRequestObjectResult("");
-
-            return new OkObjectResult("Account created");
+            return Ok("Account created");
         }
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
@@ -71,7 +94,7 @@ namespace Api.Controllers
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return await Task.FromResult<ClaimsIdentity>(null);
 
-            // get the user to verifty
+            // get the user to verify
             User userToVerify = await _userManager.FindByNameAsync(userName);
 
             if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
@@ -79,7 +102,12 @@ namespace Api.Controllers
             // check the credentials
             if (await _userManager.CheckPasswordAsync(userToVerify, password))
             {
-                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id));
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+                {
+                    new Claim("id", userToVerify.UserId.ToString()),
+                    new Claim("role", "api_access")
+                });
+                return await Task.FromResult(claimsIdentity);
             }
 
             // Credentials are invalid, or account doesn't exist

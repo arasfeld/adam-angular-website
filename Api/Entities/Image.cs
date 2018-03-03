@@ -1,12 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Entities
 {
     public class Image
     {
-        [Key]
         public int ImageId { get; set; }
 
         public string FileName { get; set; }
@@ -23,7 +20,6 @@ namespace Api.Entities
 
         // Extended properties
 
-        [NotMapped]
         public byte[] Data { get; set; }
     }
 }
