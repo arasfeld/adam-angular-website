@@ -1,0 +1,46 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<form [formGroup]="postForm" (ngSubmit)="submit()" *ngIf="!loading">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row">
+        <div fxLayout="column" fxFlex="75">
+          <mat-form-field>
+            <input matInput formControlName="title" placeholder="Title"/>
+            <mat-error *ngIf="postForm.controls['title'].errors && postForm.controls['title'].errors.required">
+              Title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field>
+            <textarea matInput formControlName="body" placeholder="Body" rows="10"></textarea>
+            <mat-error *ngIf="postForm.controls['body'].errors && postForm.controls['body'].errors.required">
+              Body is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field>
+            <app-input-file formControlName="file" placeholder="File" valuePlaceholder="No file selected"></app-input-file>
+            <mat-icon matSuffix>folder</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="center center" fxFlex [ngSwitch]="imgSrc">
+          <div *ngSwitchCase="null">
+              <mat-icon class="no-photo">photo</mat-icon>
+              <div>No Image</div>
+          </div>
+          <div *ngSwitchDefault>
+              <img [src]="imgSrc" class="preview-img"/>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button *ngIf="postId" color="warn" (click)="delete()">Delete</button>
+      <span fxFlex></span>
+      <button mat-button (click)="cancel()">Cancel</button>
+      <button mat-button type="submit" color="primary">Save</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

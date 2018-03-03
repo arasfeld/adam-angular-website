@@ -3,7 +3,11 @@
 <div *ngIf="!loading">
   <mat-card *ngFor="let post of posts">
     <mat-card-title>
-      {{ post.title }}
+      <a class="post-title" [routerLink]="['/post', post.postId]">{{ post.title }}</a>
+      <span fxFlex></span>
+      <a mat-mini-fab *ngIf="user.isLoggedIn()" color="primary" [routerLink]="['/post-form', post.postId]">
+        <mat-icon>edit</mat-icon>
+      </a>
     </mat-card-title>
     <!-- <img mat-card-image src="{{'data:' + post.image.contentType + ';base64,' + post.image.data }}" alt=""> -->
     <mat-card-content>
@@ -18,6 +22,6 @@
   </mat-card>
 </div>
 
-<a mat-mini-fab *ngIf="user.isLoggedIn()" class="add-button" color="primary" routerLink="/post">
+<a mat-mini-fab *ngIf="user.isLoggedIn()" class="add-button" color="primary" routerLink="/post-form">
   <mat-icon>add</mat-icon>
 </a>

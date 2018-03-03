@@ -42,13 +42,16 @@
     <Folder Include="src\app\core\contact\" />
     <Folder Include="src\app\core\home\" />
     <Folder Include="src\app\core\login\" />
+    <Folder Include="src\app\core\not-found\" />
     <Folder Include="src\app\core\resume\" />
     <Folder Include="src\app\core\sidenav\" />
     <Folder Include="src\app\core\toolbar\" />
     <Folder Include="src\app\photos\" />
+    <Folder Include="src\app\photos\photo-form\" />
     <Folder Include="src\app\photos\photo-list\" />
     <Folder Include="src\app\photos\photo\" />
     <Folder Include="src\app\posts\" />
+    <Folder Include="src\app\posts\post-form\" />
     <Folder Include="src\app\posts\post-list\" />
     <Folder Include="src\app\posts\post\" />
     <Folder Include="src\app\shared\" />
@@ -57,6 +60,8 @@
     <Folder Include="src\app\shared\directives\" />
     <Folder Include="src\app\shared\models\" />
     <Folder Include="src\assets\" />
+    <Folder Include="src\assets\icons\" />
+    <Folder Include="src\assets\images\" />
     <Folder Include="src\environments\" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +80,8 @@
     <TypeScriptCompile Include="src\app\core\layout.service.ts" />
     <TypeScriptCompile Include="src\app\core\login\login.component.spec.ts" />
     <TypeScriptCompile Include="src\app\core\login\login.component.ts" />
+    <TypeScriptCompile Include="src\app\core\not-found\not-found.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\core\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\core\resume\resume.component.spec.ts" />
     <TypeScriptCompile Include="src\app\core\resume\resume.component.ts" />
     <TypeScriptCompile Include="src\app\core\sidenav\sidenav.component.spec.ts" />
@@ -83,6 +90,8 @@
     <TypeScriptCompile Include="src\app\core\toolbar\toolbar.component.ts" />
     <TypeScriptCompile Include="src\app\core\user.service.ts" />
     <TypeScriptCompile Include="src\app\material.module.ts" />
+    <TypeScriptCompile Include="src\app\photos\photo-form\photo-form.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\photos\photo-form\photo-form.component.ts" />
     <TypeScriptCompile Include="src\app\photos\photo-list\photo-list.component.spec.ts" />
     <TypeScriptCompile Include="src\app\photos\photo-list\photo-list.component.ts" />
     <TypeScriptCompile Include="src\app\photos\photo.model.ts" />
@@ -91,6 +100,8 @@
     <TypeScriptCompile Include="src\app\photos\photos.service.ts" />
     <TypeScriptCompile Include="src\app\photos\photo\photo.component.spec.ts" />
     <TypeScriptCompile Include="src\app\photos\photo\photo.component.ts" />
+    <TypeScriptCompile Include="src\app\posts\post-form\post-form.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\posts\post-form\post-form.component.ts" />
     <TypeScriptCompile Include="src\app\posts\post-list\post-list.component.spec.ts" />
     <TypeScriptCompile Include="src\app\posts\post-list\post-list.component.ts" />
     <TypeScriptCompile Include="src\app\posts\post.model.ts" />
@@ -101,6 +112,7 @@
     <TypeScriptCompile Include="src\app\posts\post\post.component.ts" />
     <TypeScriptCompile Include="src\app\shared\components\input-file\input-file.component.spec.ts" />
     <TypeScriptCompile Include="src\app\shared\components\input-file\input-file.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\directives\auto-focus.directive.ts" />
     <TypeScriptCompile Include="src\app\shared\models\file-input.model.ts" />
     <TypeScriptCompile Include="src\app\shared\models\image.model.ts" />
     <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
@@ -126,16 +138,22 @@
     <Content Include="src\app\core\home\home.component.scss" />
     <Content Include="src\app\core\login\login.component.html" />
     <Content Include="src\app\core\login\login.component.scss" />
+    <Content Include="src\app\core\not-found\not-found.component.html" />
+    <Content Include="src\app\core\not-found\not-found.component.scss" />
     <Content Include="src\app\core\resume\resume.component.html" />
     <Content Include="src\app\core\resume\resume.component.scss" />
     <Content Include="src\app\core\sidenav\sidenav.component.html" />
     <Content Include="src\app\core\sidenav\sidenav.component.scss" />
     <Content Include="src\app\core\toolbar\toolbar.component.html" />
     <Content Include="src\app\core\toolbar\toolbar.component.scss" />
+    <Content Include="src\app\photos\photo-form\photo-form.component.html" />
+    <Content Include="src\app\photos\photo-form\photo-form.component.scss" />
     <Content Include="src\app\photos\photo-list\photo-list.component.html" />
     <Content Include="src\app\photos\photo-list\photo-list.component.scss" />
     <Content Include="src\app\photos\photo\photo.component.html" />
     <Content Include="src\app\photos\photo\photo.component.scss" />
+    <Content Include="src\app\posts\post-form\post-form.component.html" />
+    <Content Include="src\app\posts\post-form\post-form.component.scss" />
     <Content Include="src\app\posts\post-list\post-list.component.html" />
     <Content Include="src\app\posts\post-list\post-list.component.scss" />
     <Content Include="src\app\posts\post\post.component.html" />
@@ -143,7 +161,8 @@
     <Content Include="src\app\shared\components\input-file\input-file.component.html" />
     <Content Include="src\app\shared\components\input-file\input-file.component.scss" />
     <Content Include="src\assets\.gitkeep" />
-    <Content Include="src\assets\me-purple.jpg" />
+    <Content Include="src\assets\icons\github.svg" />
+    <Content Include="src\assets\images\me-purple.jpg" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
     <Content Include="src\styles.scss" />

@@ -9,6 +9,7 @@ import { MaterialModule } from '../material.module';
 
 import { routing } from './posts-routing.module';
 import { PostComponent } from './post/post.component';
+import { PostFormComponent } from './post-form/post-form.component';
 import { PostListComponent } from './post-list/post-list.component';
 
 import { PostsService } from './posts.service';
@@ -26,6 +27,7 @@ import { PostsService } from './posts.service';
   ],
   declarations: [
     PostComponent,
+    PostFormComponent,
     PostListComponent
   ],
   exports: [],

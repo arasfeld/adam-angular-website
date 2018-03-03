@@ -8,6 +8,7 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material.module';
+import { AuthGuard } from './auth-guard.service';
 import { routing } from './app-routing.module';
 
 /* App Root */
@@ -36,10 +37,13 @@ import { PostsModule } from './posts/posts.module';
     PostsModule,
     routing
   ],
-  providers: [{ 
-    provide: XHRBackend, 
-    useClass: AuthenticateXHRBackend
-  }],
+  providers: [
+    AuthGuard,
+    {
+      provide: XHRBackend,
+      useClass: AuthenticateXHRBackend
+    }
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

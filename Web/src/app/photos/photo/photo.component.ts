@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
@@ -10,66 +11,31 @@ import { LayoutService } from '../../core/layout.service';
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.scss']
 })
-export class PhotoComponent implements OnInit {
-  photoForm: FormGroup;
+export class PhotoComponent {
+  photoId: number;
+  photo: Photo;
   loading: boolean = false;
   imgSrc: string;
 
   constructor(
     private photosService: PhotosService,
-    private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.createForm();
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar) {
+      this.route.params.subscribe(params => {
+        this.photoId = +params['id'];
+        this.getPhoto();
+      });
   }
 
-  createForm(): void {
-    this.photoForm = this.fb.group({
-      title: '',
-      caption: '',
-      file: ['', Validators.required]
-    });
-    this.onChanges();
-  }
-
-  onChanges(): void {
-    this.photoForm.controls['file'].valueChanges.subscribe(val => {
-      if (val && val.files && val.files[0]) {
-        let fileReader = new FileReader();
-        fileReader.onload = () => this.imgSrc = fileReader.result;
-        fileReader.readAsDataURL(val.files[0]);
-      }
-      else {
-        this.imgSrc = null;
-      }
-    });
-  }
-
-  submit(): void {
+  getPhoto(): void {
     this.loading = true;
-    let file = this.photoForm.value.file;
-    if (this.photoForm.valid && file.files && file.files[0]) {
-      let photo = this.createFormData();
-      this.photosService.addPhoto(photo)
-        .finally(() => this.loading = false)
-        .subscribe(response => {
-          console.log(response);
-        },
-        (err: Response) => {
-          console.log(err);
-        });
-    }
-  }
-
-  createFormData(): FormData {
-    let formData = new FormData();
-    formData.append('title', this.photoForm.value.title);
-    formData.append('caption', this.photoForm.value.caption);
-
-    // Add image file
-    let file = this.photoForm.value.file;
-    formData.append('file', file.files[0]);
-
-    return formData;
+    this.photosService.getPhoto(this.photoId)
+      .finally(() => this.loading = false)
+      .subscribe((photo: Photo) => {
+        this.photo = photo;
+      },
+      (err: Response) => {
+        this.snackBar.open('Error getting photo.', null, { duration: 3000, panelClass: 'snackbar-error' });
+      });
   }
 }

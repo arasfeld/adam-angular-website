@@ -9,6 +9,7 @@ import { MaterialModule } from '../material.module';
 
 import { routing } from './photos-routing.module';
 import { PhotoComponent } from './photo/photo.component';
+import { PhotoFormComponent } from './photo-form/photo-form.component';
 import { PhotoListComponent } from './photo-list/photo-list.component';
 
 import { PhotosService } from './photos.service';
@@ -26,6 +27,7 @@ import { PhotosService } from './photos.service';
   ],
   declarations: [
     PhotoComponent,
+    PhotoFormComponent,
     PhotoListComponent
   ],
   exports: [],
