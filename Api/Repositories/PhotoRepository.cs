@@ -26,7 +26,8 @@ namespace Api.Repositories
                 connection.Open();
                 return connection.Query<Photo, Image, Photo>($@"
                     SELECT * FROM [Photos] P
-                        INNER JOIN [Images] I ON P.[ImageId] = I.[ImageId]",
+                        INNER JOIN [Images] I ON P.[ImageId] = I.[ImageId]"
+                    + GetWhereClause(filter),
                     (photo, image) =>
                     {
                         photo.Image = image;
@@ -99,14 +100,18 @@ namespace Api.Repositories
             return true;
         }
 
-        private Func<Photo, bool> MatchesFilter(PhotoFilter filter)
+        private string GetWhereClause(PhotoFilter filter)
         {
-            if (filter == null) return p => true;
+            if (filter == null) return "";
 
-            return p =>
-                (!filter.PhotoId.HasValue || filter.PhotoId.Value == p.PhotoId) &&
-                (!filter.StartTime.HasValue || filter.StartTime.Value <= p.Timestamp) &&
-                (!filter.EndTime.HasValue || filter.EndTime.Value >= p.Timestamp);
+            List<string> conditions = new List<string>();
+            if (filter.PhotoId.HasValue) conditions.Add("P.[PhotoId] = " + filter.PhotoId.Value);
+            if (filter.StartTime.HasValue) conditions.Add("P.[Timestamp] >= '" + filter.StartTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
+            if (filter.EndTime.HasValue) conditions.Add("P.[Timestamp] <= '" + filter.EndTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
+
+            if (!conditions.Any()) return "";
+
+            return " WHERE " + string.Join(" AND ", conditions);
         }
     }
 }
