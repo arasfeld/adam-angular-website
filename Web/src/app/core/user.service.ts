@@ -31,11 +31,9 @@ export class UserService {
 
     return this.http
       .post(this.API_BASE_URL + '/auth/login',
-      JSON.stringify({ userName, password }),{ headers }
-      )
-      .map(res => res.json())
+      JSON.stringify({ userName, password }),{ headers })
       .map(res => {
-        localStorage.setItem('auth_token', res.auth_token);
+        localStorage.setItem('auth_token', res.text());
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;

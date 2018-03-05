@@ -21,13 +21,7 @@ export class PostsService {
     return this.http.get<Post>(`${this.API_BASE_URL}/Posts/${id}`);
   }
 
-  addPost(post: Post) {
-    let authToken = localStorage.getItem('auth_token');
-    let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
-    return this.http.post<Post>(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });
-  }
-
-  addPostNew(post: FormData) {
+  addPost(post: FormData) {
     let authToken = localStorage.getItem('auth_token');
     let headers = new HttpHeaders({'Authorization': `Bearer ${authToken}`});
     return this.http.post<Post>(`${this.API_BASE_URL}/Posts`, post, { 'headers': headers });

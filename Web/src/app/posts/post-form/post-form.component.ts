@@ -94,7 +94,7 @@ export class PostFormComponent implements OnInit {
     this.loading = true;
     if (this.postForm.valid) {
       let post = this.createFormData();
-      this.postsService.addPostNew(post)
+      this.postsService.addPost(post)
         .finally(() => this.loading = false)
         .subscribe(response => {
           this.snackBar.open('Successfully added new post.', null, { duration: 3000, panelClass: 'snackbar-success' });

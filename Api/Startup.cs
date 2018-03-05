@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace Api
@@ -30,7 +31,7 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IFileRepository, LocalFileRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
@@ -41,25 +42,18 @@ namespace Api
             services.AddTransient<IRoleStore<Role>, RoleStore>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = Configuration["JwtSettings:Issuer"],
-                        ValidateAudience = true,
-                        ValidAudience = Configuration["JwtSettings:Audience"],
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:Key"])),
-                        RequireExpirationTime = false,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
-
-            services.AddAuthorization(options =>
+            .AddJwtBearer(options =>
             {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim("role", "api_access"));
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["JwtSettings:Issuer"],
+                    ValidAudience = Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSettings:Key"]))
+                };
             });
 
             services.AddIdentity<User, Role>()
@@ -72,6 +66,7 @@ namespace Api
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
@@ -96,7 +91,6 @@ namespace Api
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
 

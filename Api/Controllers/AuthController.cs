@@ -7,9 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,39 +35,30 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            ClaimsIdentity identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
-            if (identity == null)
+            // get the user to verify
+            User userToVerify = await _userManager.FindByNameAsync(credentials.UserName);
+            if (userToVerify == null) return BadRequest();
+
+            // check the credentials
+            if (!await _userManager.CheckPasswordAsync(userToVerify, credentials.Password))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
-            // Create the JWT security token and encode it.
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],
                 audience: _configuration["JwtSettings:Audience"],
-                claims: new[]
+                claims: new Claim[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, credentials.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, Math.Round((DateTime.UtcNow -
-                               new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
-                              .TotalSeconds).ToString(), ClaimValueTypes.Integer64),
-                    identity.FindFirst("role"),
-                    identity.FindFirst("id")
+                    new Claim(ClaimTypes.Name, credentials.UserName)
                 },
-                notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(120)),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JwtSettings:Key"])), SecurityAlgorithms.HmacSha256));
-            string encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
 
-            var response = new
-            {
-                id = identity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = encodedJwt,
-                expires_in = (int)TimeSpan.FromMinutes(120).TotalSeconds
-            };
-
-            return Ok(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
         // POST api/auth/adduser
@@ -87,31 +76,6 @@ namespace Api.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             return Ok("Account created");
-        }
-
-        private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
-        {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                return await Task.FromResult<ClaimsIdentity>(null);
-
-            // get the user to verify
-            User userToVerify = await _userManager.FindByNameAsync(userName);
-
-            if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
-
-            // check the credentials
-            if (await _userManager.CheckPasswordAsync(userToVerify, password))
-            {
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
-                {
-                    new Claim("id", userToVerify.UserId.ToString()),
-                    new Claim("role", "api_access")
-                });
-                return await Task.FromResult(claimsIdentity);
-            }
-
-            // Credentials are invalid, or account doesn't exist
-            return await Task.FromResult<ClaimsIdentity>(null);
         }
     }
 }

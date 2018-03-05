@@ -6,11 +6,11 @@ using System.IO;
 
 namespace Api.Repositories
 {
-    public class FileRepository : IFileRepository
+    public class LocalFileRepository : IFileRepository
     {
         private readonly IOptions<FileSettings> _fileSettings;
 
-        public FileRepository(IOptions<FileSettings> fileSettings)
+        public LocalFileRepository(IOptions<FileSettings> fileSettings)
         {
             _fileSettings = fileSettings;
         }
