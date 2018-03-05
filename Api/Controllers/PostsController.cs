@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     public class PostsController : Controller
     {
@@ -22,7 +21,6 @@ namespace Api.Controllers
         }
 
         // GET api/posts
-        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<Post> Get([FromQuery]PostFilter filter)
         {
@@ -30,7 +28,6 @@ namespace Api.Controllers
         }
 
         // GET api/posts/5
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public Post Get(int id)
         {
@@ -38,6 +35,7 @@ namespace Api.Controllers
         }
 
         // POST api/posts
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         [HttpPost]
         public Post Post()
         {
@@ -52,6 +50,7 @@ namespace Api.Controllers
         }
 
         // PUT api/posts
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         [HttpPut]
         public Post Put()
         {
@@ -65,6 +64,7 @@ namespace Api.Controllers
         }
 
         // DELETE api/posts/5
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
