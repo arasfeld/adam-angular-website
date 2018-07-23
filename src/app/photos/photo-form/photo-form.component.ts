@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
@@ -51,7 +52,7 @@ export class PhotoFormComponent implements OnInit {
     if (this.photoForm.valid && file.files && file.files[0]) {
       let photo = this.createFormData();
       this.photosService.addPhoto(photo)
-        .finally(() => this.loading = false)
+        .pipe(finalize(() => this.loading = false))
         .subscribe(response => {
           console.log(response);
         },

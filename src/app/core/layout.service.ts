@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Subscription } from "rxjs/Subscription";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 
 @Injectable()

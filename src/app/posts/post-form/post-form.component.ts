@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -38,7 +39,7 @@ export class PostFormComponent implements OnInit {
   getPost() {
     this.loading = true;
     this.postsService.getPost(this.postId)
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((post: Post) => {
         this.postForm.patchValue({
           title: post.title,
@@ -81,7 +82,7 @@ export class PostFormComponent implements OnInit {
   delete(): void {
     this.loading = true;
     this.postsService.deletePost(this.postId)
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         this.snackBar.open('Successfully deleted post.', null, { duration: 3000, panelClass: 'snackbar-success' });
       },
@@ -95,7 +96,7 @@ export class PostFormComponent implements OnInit {
     if (this.postForm.valid) {
       let post = this.createFormData();
       this.postsService.addPost(post)
-        .finally(() => this.loading = false)
+        .pipe(finalize(() => this.loading = false))
         .subscribe(response => {
           this.snackBar.open('Successfully added new post.', null, { duration: 3000, panelClass: 'snackbar-success' });
         },

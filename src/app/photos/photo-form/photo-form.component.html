@@ -12,14 +12,6 @@
           <mat-form-field>
             <input matInput formControlName="caption" placeholder="Caption"/>
           </mat-form-field>
-    
-          <mat-form-field>
-            <app-input-file formControlName="file" placeholder="File" valuePlaceholder="No file selected" required></app-input-file>
-            <mat-icon matSuffix>folder</mat-icon>
-            <mat-error *ngIf="photoForm.controls['file'].errors && photoForm.controls['file'].errors.required">
-              Must select a file
-            </mat-error>
-          </mat-form-field>
         </div>
         <div fxLayoutAlign="center center" fxFlex [ngSwitch]="imgSrc">
           <div *ngSwitchCase="null">

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -30,7 +31,7 @@ export class PostComponent {
   getPost(): void {
     this.loading = true;
     this.postsService.getPost(this.postId)
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((post: Post) => {
         this.post = post;
       },

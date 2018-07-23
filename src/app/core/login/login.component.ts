@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 
 import { LayoutService } from '../layout.service';
 import { UserService } from '../user.service';
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value.username, this.loginForm.value.password)
-        .finally(() => this.loading = false)
+        .pipe(finalize(() => this.loading = false))
         .subscribe(result => {         
           if (result) {
             this.snackBar.open('Successfully logged in.', null, { duration: 3000, panelClass: 'snackbar-success' });

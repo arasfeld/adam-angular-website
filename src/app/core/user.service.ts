@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { Observable } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -32,13 +32,15 @@ export class UserService {
     return this.http
       .post(this.API_BASE_URL + '/auth/login',
       JSON.stringify({ userName, password }),{ headers })
-      .map(res => {
-        localStorage.setItem('auth_token', res.text());
-        this.loggedIn = true;
-        this._authNavStatusSource.next(true);
-        return true;
-      })
-      .catch(err => Observable.throw(err));
+      .pipe(
+        map(res => {
+          localStorage.setItem('auth_token', res.text());
+          this.loggedIn = true;
+          this._authNavStatusSource.next(true);
+          return true;
+        }),
+        catchError(err => Observable.throw(err))
+      );
   }
 
   logout() {

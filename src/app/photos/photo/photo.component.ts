@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
@@ -30,7 +31,7 @@ export class PhotoComponent {
   getPhoto(): void {
     this.loading = true;
     this.photosService.getPhoto(this.photoId)
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((photo: Photo) => {
         this.photo = photo;
       },

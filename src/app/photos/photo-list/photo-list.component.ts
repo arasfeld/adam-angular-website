@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 
 import { Photo } from '../photo.model';
 import { PhotosService } from '../photos.service';
@@ -31,7 +32,7 @@ export class PhotoListComponent implements OnInit {
   getPhotos() {
     this.loading = true;
     this.photosService.getPhotos()
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((photos: Photo[]) => {
         this.photos = photos;
       },

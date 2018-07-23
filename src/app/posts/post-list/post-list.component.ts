@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -31,7 +32,7 @@ export class PostListComponent implements OnInit {
   getPosts() {
     this.loading = true;
     this.postsService.getPosts()
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe((posts: Post[]) => {
         this.posts = posts;
       },
