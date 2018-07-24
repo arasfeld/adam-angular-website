@@ -1,21 +1,21 @@
 <mat-nav-list dense>
-  <a mat-list-item routerLink="">
+  <a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     <mat-icon class="sidenav-item-icon">home</mat-icon>
     <span class="body1">Home</span>
   </a>
-  <a mat-list-item routerLink="music">
+  <a mat-list-item routerLink="music" routerLinkActive="active">
     <mat-icon class="sidenav-item-icon">music_note</mat-icon>
     <span>Music</span>
   </a>
-  <a mat-list-item routerLink="games">
+  <a mat-list-item routerLink="games" routerLinkActive="active">
     <mat-icon class="sidenav-item-icon">videogame_asset</mat-icon>
     <span>Games</span>
   </a>
-  <a mat-list-item routerLink="resume">
+  <a mat-list-item routerLink="resume" routerLinkActive="active">
     <mat-icon class="sidenav-item-icon">assignment_ind</mat-icon>
     <span>Resume</span>
   </a>
-  <a mat-list-item routerLink="contact">
+  <a mat-list-item routerLink="contact" routerLinkActive="active">
     <mat-icon class="sidenav-item-icon">mail</mat-icon>
     <span>Contact</span>
   </a>

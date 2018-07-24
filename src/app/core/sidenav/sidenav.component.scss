@@ -1,9 +1,7 @@
 @import "~@angular/material/theming";
 @import "src/styles.scss";
 
-.mat-nav-list .mat-list-item:hover,
-.mat-nav-list .mat-list-item.mat-list-item-focus {
-  transition: 0.8s;
+.mat-nav-list .mat-list-item.active {
   color: mat-color($adam-app-primary);
 }
 
