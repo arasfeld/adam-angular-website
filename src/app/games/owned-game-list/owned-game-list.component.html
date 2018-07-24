@@ -1,0 +1,9 @@
+<div *ngIf="games.length">
+  <h1 class="mat-headline">Owned Games</h1>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div *ngFor="let game of games">
+      <img class="owned-game-image" [src]="game.logoUrl" [alt]="game.name">
+    </div>
+  </div>
+</div>

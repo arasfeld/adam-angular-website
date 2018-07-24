@@ -1,0 +1,6 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div *ngIf="!loading">
+  <app-recently-played-game-list [games]="recentlyPlayedGames"></app-recently-played-game-list>
+  <app-owned-game-list [games]="ownedGames"></app-owned-game-list>
+</div>

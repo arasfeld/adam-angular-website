@@ -1,0 +1,14 @@
+<div *ngIf="games.length">
+  <h1 class="mat-headline">Recent Games</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-list role="list" dense>
+        <mat-list-item role="listitem" *ngFor="let game of games">
+          <img matListAvatar [src]="game.iconUrl" [alt]="game.name">
+          <h4 matLine>{{game.name}}</h4>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

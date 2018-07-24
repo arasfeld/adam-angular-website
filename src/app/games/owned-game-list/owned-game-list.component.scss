@@ -1,0 +1,36 @@
+.artist-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.artist-image {
+  height: 100%;
+  width: 100%;
+}
+
+.artist-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+}
+
+.artist-title-wrap {
+  flex-grow: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.artist-title {
+  font-size: 16px;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
