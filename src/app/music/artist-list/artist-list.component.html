@@ -1,0 +1,14 @@
+<div *ngIf="artists.length">
+  <h1 class="mat-headline">Top Artists</h1>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div class="artist-container" *ngFor="let artist of artists">
+      <img class="artist-image" [src]="artist.imageUrl" [alt]="artist.name">
+      <div class="artist-overlay">
+        <div class="artist-title-wrap">
+          <div class="artist-title">{{artist.name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

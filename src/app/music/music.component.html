@@ -1,0 +1,7 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div *ngIf="!loading">
+  <app-track-list [tracks]="tracks"></app-track-list>
+  <app-album-list [albums]="albums"></app-album-list>
+  <app-artist-list [artists]="artists"></app-artist-list>
+</div>

@@ -6,4 +6,8 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:50712/api',
+  lastFmApiKey: 'API_KEY',
+  lastFmUsername: 'arazzy',
+  steamApiKey: 'API_KEY',
+  steamId: '76561198206720592'
 };

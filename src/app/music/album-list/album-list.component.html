@@ -1,0 +1,19 @@
+<div *ngIf="albums.length">
+  <h1 class="mat-headline">Top Albums</h1>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <div class="album-container" *ngFor="let album of albums">
+      <img class="album-image" [src]="album.imageUrl" [alt]="album.name">
+      <div class="album-overlay">
+        <div class="album-title-wrap">
+          <div class="album-title">
+            <span class="mat-body-1">{{album.name}}</span>
+          </div>
+          <div class="album-subtitle">
+            <span class="mat-body-1">{{album.artist}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
