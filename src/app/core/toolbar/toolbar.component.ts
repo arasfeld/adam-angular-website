@@ -8,6 +8,5 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  
   constructor(private layout: LayoutService) {}
 }

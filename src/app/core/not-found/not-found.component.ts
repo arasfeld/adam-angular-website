@@ -8,7 +8,6 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent {
- 
   constructor(private layout: LayoutService) {
     this.layout.title = 'Not Found';
   }

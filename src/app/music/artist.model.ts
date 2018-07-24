@@ -5,9 +5,9 @@ export class Artist {
   playcount: number;
 
   constructor(artist: any) {
-    this.rank = parseInt(artist['@attr'].rank);
+    this.rank = parseInt(artist['@attr'].rank, 10);
     this.name = artist.name;
     this.imageUrl = artist.image[2]['#text'];
-    this.playcount = parseInt(artist.playcount);
+    this.playcount = parseInt(artist.playcount, 10);
   }
 }

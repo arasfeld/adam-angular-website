@@ -1,3 +1,5 @@
+<app-toolbar></app-toolbar>
+
 <mat-drawer-container>
 
 	<mat-drawer [mode]="layout.sidenavMode | async" [opened]="layout.sidenavOpen | async">
@@ -5,11 +7,7 @@
 	</mat-drawer>
 
 	<mat-drawer-content>
-		<app-toolbar></app-toolbar>
-
 		<router-outlet></router-outlet>
 	</mat-drawer-content>
 
 </mat-drawer-container>
- 
-

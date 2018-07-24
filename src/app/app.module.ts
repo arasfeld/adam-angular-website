@@ -2,26 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, XHRBackend } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material.module';
-import { AuthGuard } from './auth-guard.service';
 import { routing } from './app-routing.module';
 
 /* App Root */
 import { AppComponent } from './app.component';
-/* Core Imports */
-import { CoreModule }  from './core/core.module';
-/* Photos Imports */
-import { PhotosModule } from './photos/photos.module';
-/* Posts Imports */
-import { PostsModule } from './posts/posts.module';
+import { ContactModule } from './contact/contact.module';
+import { CoreModule } from './core/core.module';
+import { GamesModule } from './games/games.module';
+import { HomeModule } from './home/home.module';
+import { MusicModule } from './music/music.module';
+import { ResumeModule } from './resume/resume.module';
 
 @NgModule({
-  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -33,17 +30,14 @@ import { PostsModule } from './posts/posts.module';
     MaterialModule,
     /* App Modules */
     CoreModule,
-    PhotosModule,
-    PostsModule,
+    ContactModule,
+    GamesModule,
+    HomeModule,
+    MusicModule,
+    ResumeModule,
     routing
   ],
-  providers: [
-    AuthGuard,
-    {
-      provide: XHRBackend,
-      useClass: AuthenticateXHRBackend
-    }
-  ],
-  bootstrap: [ AppComponent ]
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

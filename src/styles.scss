@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -9,33 +9,35 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
-$adam-app-primary: mat-palette($mat-deep-purple);
-$adam-app-accent:  mat-palette($mat-grey, A200, A100, A400);
+$adam-app-primary: mat-palette($mat-green);
+$adam-app-accent: mat-palette($mat-grey, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$adam-app-warn:    mat-palette($mat-red);
+$adam-app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$adam-app-theme:   mat-dark-theme($adam-app-primary, $adam-app-accent, $adam-app-warn);
+$adam-app-theme: mat-dark-theme(
+  $adam-app-primary,
+  $adam-app-accent,
+  $adam-app-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($adam-app-theme);
 
-body, html {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-}
-
-mat-card {
-    margin: 8px;
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .snackbar-success {
-    background-color: #4F7942;
+  background-color: #4f7942;
 }
+
 .snackbar-error {
-    background-color: #CD5C5C;
+  background-color: #cd5c5c;
 }
