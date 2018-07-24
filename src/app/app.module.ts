@@ -4,8 +4,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { environment } from '../environments/environment';
 import { MaterialModule } from './material.module';
 import { routing } from './app-routing.module';
 
@@ -21,6 +23,9 @@ import { ResumeModule } from './resume/resume.module';
 @NgModule({
   imports: [
     BrowserModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production
+    }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

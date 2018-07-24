@@ -16,7 +16,7 @@ export class SidenavComponent {
   ) {
     this.matIconRegistry.addSvgIcon(
       'octocat',
-      domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/octocat.svg')
+      domSanitizer.bypassSecurityTrustResourceUrl('assets/svgs/octocat.svg')
     );
   }
 }
