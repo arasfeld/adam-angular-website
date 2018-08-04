@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from "rxjs";
-import { MediaChange, ObservableMedia } from "@angular/flex-layout";
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 
 @Injectable()
 export class LayoutService implements OnDestroy {
@@ -15,17 +15,16 @@ export class LayoutService implements OnDestroy {
   private _sidenavMode = new BehaviorSubject<string>('side');
   public sidenavMode = this._sidenavMode.asObservable();
 
-  public title: string = '';
+  public title = '';
 
   constructor(private media: ObservableMedia) {
     this.watcher = media.subscribe((change: MediaChange) => {
-      let activeMediaQuery = change.mqAlias;
-      if (change.mqAlias == 'xs') {
+      const activeMediaQuery = change.mqAlias;
+      if (change.mqAlias === 'xs') {
         this._sidenavOpen.next(false);
         this._showMenuIcon.next(true);
         this._sidenavMode.next('over');
-      }
-      else {
+      } else {
         this._sidenavOpen.next(true);
         this._showMenuIcon.next(false);
         this._sidenavMode.next('side');

@@ -8,5 +8,5 @@ import { LayoutService } from './core/layout.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private layout: LayoutService) {}
+  constructor(public layout: LayoutService) {}
 }

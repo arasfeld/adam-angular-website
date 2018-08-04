@@ -1,22 +1,24 @@
-.circle-photo {
-  display: block;
-  width: 200px;
-  height: 200px;
-  margin: 1em auto;
-  margin-left: 50px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  -webkit-border-radius: 99em;
-  -moz-border-radius: 99em;
-  border-radius: 99em;
-  border: 5px solid #eee;
+@import "~@angular/material/theming";
+@import "src/styles.scss";
+
+$background: map-get($adam-app-theme, background);
+$typography: mat-typography-config();
+
+.resume-header-avatar {
+  background: mat-color($background, unselected-chip);
+  width: 150px;
+  height: 150px;
 }
 
-.contact-info {
-  margin-left: 50px;
+.resume-firstname {
+  @include mat-typography-level-to-styles($typography, display-1);
 }
 
-mat-toolbar-row {
-  height: 250px;
+.resume-lastname {
+  @include mat-typography-font-shorthand(
+    mat-font-size($typography, display-1),
+    mat-font-weight($typography, display-1) - 100,
+    mat-line-height($typography, display-1),
+    mat-font-family($typography, display-1)
+  );
 }
